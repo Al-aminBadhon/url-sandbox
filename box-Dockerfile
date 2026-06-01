@@ -18,10 +18,7 @@ RUN CHROME=google-chrome.deb && \
     wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" -O $CHROME && \
     dpkg -i $CHROME || true && \
     apt-get install -y -f
-RUN PHANTOMJS=`curl -sL https://bitbucket.org/ariya/phantomjs/downloads/ | grep -E -o 'phantomjs-[0-9]{1,2}.[0-9]{1,2}.[0-9]{1,2}-linux-x86_64.tar.bz2'  | head -n 1` && \
-    wget https://bitbucket.org/ariya/phantomjs/downloads/$PHANTOMJS -O $PHANTOMJS && \
-    tar -jxf $PHANTOMJS && \
-    cp $PHANTOMJS /usr/local/bin/phantomjs
+RUN apt-get update && apt-get install -y chromium-driver
 COPY ./box/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN mkdir /output
 ADD ./box ./box
